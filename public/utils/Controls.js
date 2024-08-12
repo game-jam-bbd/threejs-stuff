@@ -1,8 +1,10 @@
 export class Controls {
-    constructor(paperPlane) {
+    constructor(paperPlane, environment) {
         this.paperPlane = paperPlane;
+        this.environment = environment;
         this.speed = 0.2;
         this.rotationSpeed = 0.05;
+        this.brightnessStep = 1;
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
@@ -23,6 +25,12 @@ export class Controls {
                 break;
             case 'ArrowRight':
                 this.paperPlane.mesh.position.x += this.speed;
+                break;
+            case 'KeyE':
+                this.environment.adjustSunElevation(this.brightnessStep);
+                break;
+            case 'KeyQ':
+                this.environment.adjustSunElevation(-this.brightnessStep);
                 break;
         }
     }

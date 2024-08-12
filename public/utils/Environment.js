@@ -23,6 +23,11 @@ export class Environment {
         this.windowHalfX = window.innerWidth / 2;
         this.windowHalfY = window.innerHeight / 2;
 
+        this.sunParameters = {
+            elevation: 2,
+            azimuth: 180
+        };
+
         this.createWater();
         this.createSky();
         this.updateSun();
@@ -112,13 +117,8 @@ export class Environment {
     }
 
     updateSun() {
-        const parameters = {
-            elevation: 2,
-            azimuth: 180
-        };
-
-        const phi = THREE.MathUtils.degToRad(90 - parameters.elevation);
-        const theta = THREE.MathUtils.degToRad(parameters.azimuth);
+        const phi = THREE.MathUtils.degToRad(90 - this.sunParameters.elevation);
+        const theta = THREE.MathUtils.degToRad(this.sunParameters.azimuth);
 
         this.sun.setFromSphericalCoords(1, phi, theta);
 
@@ -130,6 +130,11 @@ export class Environment {
         sceneEnv.background = this.sky;
         const renderTarget = pmremGenerator.fromScene(sceneEnv);
         this.scene.environment = renderTarget.texture;
+    }
+
+    adjustSunElevation(delta) {
+        this.sunParameters.elevation = THREE.MathUtils.clamp(this.sunParameters.elevation + delta, -5, 90);
+        this.updateSun();
     }
 
     update() {

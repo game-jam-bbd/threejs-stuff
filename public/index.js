@@ -1,8 +1,9 @@
 import * as THREE from 'three';
 import { Environment } from './utils/Environment.js';
 import { PaperPlane } from './utils/PaperPlane.js';
+import { Controls } from './utils/Controls.js';
 
-let container, scene, camera, renderer, environment, paperPlane;
+let container, scene, camera, renderer, environment, paperPlane, controls;
 let clock;
 
 function init() {
@@ -30,6 +31,7 @@ function init() {
 
     environment = new Environment(scene, renderer, camera);
     paperPlane = new PaperPlane(scene);
+    controls = new Controls(paperPlane, environment);
 
     clock = new THREE.Clock();
 
