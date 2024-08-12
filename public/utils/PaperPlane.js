@@ -1,4 +1,4 @@
-// Remove this line as we're now using the global THREE object
+import * as THREE from 'three';
 
 export class PaperPlane {
     constructor(scene) {

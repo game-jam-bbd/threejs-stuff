@@ -1,11 +1,15 @@
 // Remove this line as we're now using the global THREE object
 
 import * as THREE from 'three';
+
+import Stats from 'three/addons/libs/stats.module.js';
+import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import { Water } from 'three/addons/objects/Water.js';
 import { Sky } from 'three/addons/objects/Sky.js';
 
 export class Environment {
-    constructor(scene, renderer) {
+    constructor(scene, renderer, camera) {
+        this.camera = camera;
         this.scene = scene;
         this.renderer = renderer;
         this.water = null;
@@ -24,7 +28,7 @@ export class Environment {
             {
                 textureWidth: 512,
                 textureHeight: 512,
-                waterNormals: new THREE.TextureLoader().load('/textures/waternormals.jpg', function(texture) {
+                waterNormals: new THREE.TextureLoader().load('textures/waternormals.jpg', function(texture) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 }),
                 sunDirection: new THREE.Vector3(),
@@ -71,7 +75,8 @@ export class Environment {
         this.scene.environment = renderTarget.texture;
     }
 
-    update(time) {
+    update() {
         this.water.material.uniforms['time'].value += 1.0 / 60.0;
+        this.renderer.render(this.scene, this.camera);
     }
 }
