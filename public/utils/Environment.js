@@ -31,6 +31,7 @@ export class Environment {
         this.createWater();
         this.createSky();
         this.updateSun();
+        this.createObstacles();
 
         document.addEventListener('mousedown', (event) => this.onMouseDown(event), false);
         document.addEventListener('mousemove', (event) => this.onMouseMove(event), false);
