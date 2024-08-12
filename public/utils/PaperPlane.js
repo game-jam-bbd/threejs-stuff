@@ -13,7 +13,7 @@ export class PaperPlane {
         const loader = new GLTFLoader();
         loader.load('utils/models/plane2.glb', (gltf) => {
             this.mesh = gltf.scene;
-            this.mesh.scale.set(20, 20, 20);  // Doubled the scale for even better visibility
+            this.mesh.scale.set(30, 50, 30);  // Doubled the scale for even better visibility
             this.mesh.position.set(0, 20, -50);  // Moved slightly further back
             this.mesh.rotation.y = Math.PI;  // Rotate to face the correct direction
             this.scene.add(this.mesh);
@@ -29,9 +29,6 @@ export class PaperPlane {
         if (this.mesh) {
             // Implement a hovering effect
             this.mesh.position.y = 20 + Math.sin(Date.now() * 0.001) * 1;  // Hover between 19 and 21 units high
-
-            // Log position for debugging
-            console.log('Plane position:', this.mesh.position);
         }
     }
 }
