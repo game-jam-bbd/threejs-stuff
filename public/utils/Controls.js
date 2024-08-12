@@ -50,14 +50,16 @@ export class Controls {
 
     onWheel(event) {
         event.preventDefault();
-        const zoomAmount = event.deltaY * this.zoomSpeed;
         
-        // Calculate the new camera position
-        const cameraDirection = new THREE.Vector3();
-        this.camera.getWorldDirection(cameraDirection);
-        const newPosition = this.camera.position.clone().add(cameraDirection.multiplyScalar(zoomAmount));
+        const zoomAmount = event.deltaY * 0.001; // Adjust this value to change zoom sensitivity
         
-        // Calculate the distance from the new position to the target (assumed to be at 0,0,0)
+        // Get the camera's forward direction
+        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+        
+        // Calculate the new position
+        const newPosition = this.camera.position.clone().addScaledVector(forward, zoomAmount);
+        
+        // Calculate the distance from the new position to the origin
         const distance = newPosition.length();
         
         // Check if the new position is within the allowed zoom range
