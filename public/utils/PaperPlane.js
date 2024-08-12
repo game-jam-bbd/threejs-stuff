@@ -1,11 +1,14 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
 export class PaperPlane {
     constructor(scene) {
         this.scene = scene;
         this.mesh = null;
-        this.speed = 10;
+        this.speed = 50;
         this.loadModel();
     }
 
@@ -13,8 +16,9 @@ export class PaperPlane {
         const loader = new GLTFLoader();
         loader.load('utils/models/plane2.glb', (gltf) => {
             this.mesh = gltf.scene;
-            this.mesh.scale.set(0.1, 0.1, 0.1);  // Adjust scale as needed
-            this.mesh.position.set(0, 5, 0);  // Start above the water
+            this.mesh.scale.set(0.5, 0.5, 0.5);  // Increased scale for visibility
+            this.mesh.position.set(0, 5, -10);  // Start above the water and in front of the camera
+            this.mesh.rotation.y = Math.PI;  // Rotate to face the correct direction
             this.scene.add(this.mesh);
         });
     }

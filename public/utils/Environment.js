@@ -9,6 +9,10 @@ import { Sky } from 'three/addons/objects/Sky.js';
 
 import { Obstacle } from './Obstacle.js';
 
+import * as THREE from 'three';
+import { Water } from 'three/addons/objects/Water.js';
+import { Sky } from 'three/addons/objects/Sky.js';
+
 export class Environment {
     constructor(scene, renderer, camera) {
         this.camera = camera;
@@ -17,12 +21,31 @@ export class Environment {
         this.water = null;
         this.sky = null;
         this.sun = new THREE.Vector3();
-        //this.obstacles = [];
+
+        this.mouseX = 0;
+        this.mouseY = 0;
+
+        this.windowHalfX = window.innerWidth / 2;
+        this.windowHalfY = window.innerHeight / 2;
 
         this.createWater();
         this.createSky();
         this.updateSun();
-        //this.createObstacles();
+
+        document.addEventListener('mousemove', (event) => this.onMouseMove(event), false);
+    }
+
+    onMouseMove(event) {
+        this.mouseX = (event.clientX - this.windowHalfX) * 0.05;
+        this.mouseY = (event.clientY - this.windowHalfY) * 0.05;
+    }
+
+    update() {
+        this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
+        this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
+        this.camera.lookAt(this.scene.position);
+
+        this.water.material.uniforms['time'].value += 1.0 / 60.0;
     }
 
     createObstacles() {
