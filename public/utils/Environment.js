@@ -1,7 +1,8 @@
 // Remove this line as we're now using the global THREE object
 
-import { Water } from 'https://unpkg.com/three@0.152.2/examples/jsm/objects/Water.js';
-import { Sky } from 'https://unpkg.com/three@0.152.2/examples/jsm/objects/Sky.js';
+import * as THREE from 'three';
+import { Water } from 'three/addons/objects/Water.js';
+import { Sky } from 'three/addons/objects/Sky.js';
 
 export class Environment {
     constructor(scene, renderer) {
