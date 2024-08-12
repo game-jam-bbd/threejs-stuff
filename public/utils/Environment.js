@@ -23,7 +23,7 @@ export class Environment {
             {
                 textureWidth: 512,
                 textureHeight: 512,
-                waterNormals: new THREE.TextureLoader().load('textures/waternormals.jpg', function(texture) {
+                waterNormals: new THREE.TextureLoader().load('../textures/waternormals.jpg', function(texture) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 }),
                 sunDirection: new THREE.Vector3(),
