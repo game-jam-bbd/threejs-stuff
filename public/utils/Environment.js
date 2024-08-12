@@ -45,8 +45,8 @@ export class Environment {
             this.mouseX = event.clientX - this.windowHalfX;
             this.mouseY = event.clientY - this.windowHalfY;
 
-            this.targetRotationX = this.targetRotationXOnMouseDown + (this.mouseX - this.targetRotationXOnMouseDown) * 0.005;
-            this.targetRotationY = this.targetRotationYOnMouseDown + (this.mouseY - this.targetRotationYOnMouseDown) * 0.005;
+            this.targetRotationX = this.targetRotationXOnMouseDown + (this.mouseX - this.targetRotationXOnMouseDown) * 0.0005;
+            this.targetRotationY = this.targetRotationYOnMouseDown + (this.mouseY - this.targetRotationYOnMouseDown) * 0.0005;
         }
     }
 
