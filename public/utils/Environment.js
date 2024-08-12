@@ -12,8 +12,13 @@ export class Environment {
         this.sky = null;
         this.sun = new THREE.Vector3();
 
+        this.isMouseDown = false;
         this.mouseX = 0;
         this.mouseY = 0;
+        this.targetRotationX = 0;
+        this.targetRotationY = 0;
+        this.targetRotationXOnMouseDown = 0;
+        this.targetRotationYOnMouseDown = 0;
 
         this.windowHalfX = window.innerWidth / 2;
         this.windowHalfY = window.innerHeight / 2;
@@ -22,12 +27,31 @@ export class Environment {
         this.createSky();
         this.updateSun();
 
+        document.addEventListener('mousedown', (event) => this.onMouseDown(event), false);
         document.addEventListener('mousemove', (event) => this.onMouseMove(event), false);
+        document.addEventListener('mouseup', () => this.onMouseUp(), false);
+    }
+
+    onMouseDown(event) {
+        this.isMouseDown = true;
+        this.mouseX = event.clientX - this.windowHalfX;
+        this.mouseY = event.clientY - this.windowHalfY;
+        this.targetRotationXOnMouseDown = this.targetRotationX;
+        this.targetRotationYOnMouseDown = this.targetRotationY;
     }
 
     onMouseMove(event) {
-        this.mouseX = (event.clientX - this.windowHalfX) * 0.05;
-        this.mouseY = (event.clientY - this.windowHalfY) * 0.05;
+        if (this.isMouseDown) {
+            this.mouseX = event.clientX - this.windowHalfX;
+            this.mouseY = event.clientY - this.windowHalfY;
+
+            this.targetRotationX = this.targetRotationXOnMouseDown + (this.mouseX - this.targetRotationXOnMouseDown) * 0.02;
+            this.targetRotationY = this.targetRotationYOnMouseDown + (this.mouseY - this.targetRotationYOnMouseDown) * 0.02;
+        }
+    }
+
+    onMouseUp() {
+        this.isMouseDown = false;
     }
 
     createObstacles() {
@@ -109,11 +133,11 @@ export class Environment {
     }
 
     update() {
-        this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
-        this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
+        this.camera.position.x = Math.sin(this.targetRotationX) * 100;
+        this.camera.position.z = Math.cos(this.targetRotationX) * 100;
+        this.camera.position.y = Math.sin(this.targetRotationY) * 100;
         this.camera.lookAt(this.scene.position);
 
         this.water.material.uniforms['time'].value += 1.0 / 60.0;
-        this.renderer.render(this.scene, this.camera);
     }
 }
