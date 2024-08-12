@@ -63,19 +63,31 @@ export class Environment {
 
     createObstacles() {
         const obstacleData = [
-            { model: 'utils/models/palm_tree.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
-                { x: 10, y: 0, z: -50 },
-                { x: -15, y: 0, z: -150 },
-                { x: 5, y: 0, z: -250 }
-            ]},
-            { model: 'utils/models/lighthouse.glb', scale: { x: 0.05, y: 0.05, z: 0.05 }, positions: [
-                { x: -20, y: 0, z: -100 },
-                { x: 25, y: 0, z: -300 }
-            ]},
-            { model: 'utils/models/wind_turbine.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
-                { x: 0, y: 0, z: -200 },
-                { x: -30, y: 0, z: -350 }
-            ]}
+            { 
+                model: 'utils/models/palm_tree.glb', 
+                scale: { x: 5, y: 10, z: 5 }, 
+                positions: [
+                    { x: 40, y: -15, z: -50 },
+                    { x: -40, y: -15, z: -150 },
+                    { x: 5, y: -15, z: -250 }
+                ]
+            },
+            { 
+                model: 'utils/models/lighthouse.glb', 
+                scale: { x: 0.15, y: 0.15, z: 0.15 }, 
+                positions: [
+                    { x: -50, y: -10, z: -100 },
+                    { x: 25, y: -10, z: -300 }
+                ]
+            },
+            { 
+                model: 'utils/models/wind_turbine.glb', 
+                scale: { x: 5, y: 5, z: 5 }, 
+                positions: [
+                    { x: 80, y: -10, z: -150 },
+                    { x: -100, y: -10, z: -450 }
+                ]
+            }
         ];
 
         obstacleData.forEach(data => {
@@ -156,29 +168,5 @@ export class Environment {
         if (this.water.position.z > 1000) {
             this.water.position.z = 0;
         }
-    }
-
-    createObstacles() {
-        const obstacleData = [
-            { model: 'utils/models/palm_tree.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
-                { x: 10, y: 0, z: -50 },
-                { x: -15, y: 0, z: -150 },
-                { x: 5, y: 0, z: -250 }
-            ]},
-            { model: 'utils/models/lighthouse.glb', scale: { x: 0.05, y: 0.05, z: 0.05 }, positions: [
-                { x: -20, y: 0, z: -100 },
-                { x: 25, y: 0, z: -300 }
-            ]},
-            { model: 'utils/models/wind_turbine.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
-                { x: 0, y: 0, z: -200 },
-                { x: -30, y: 0, z: -350 }
-            ]}
-        ];
-
-        obstacleData.forEach(data => {
-            data.positions.forEach(position => {
-                this.obstacles.push(new Obstacle(this.scene, data.model, data.scale, position));
-            });
-        });
     }
 }
