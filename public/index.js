@@ -1,10 +1,8 @@
 // Remove this line as we're now using the global THREE object
 import * as THREE from 'three';
-import { PaperPlane } from './utils/PaperPlane.js';
 import { Environment } from './utils/Environment.js';
-import { Controls } from './utils/Controls.js';
 
-let scene, camera, renderer, environment, paperPlane, controls;
+let scene, camera, renderer, environment;
 
 function init() {
     // Set up the scene, camera, and renderer
@@ -24,12 +22,8 @@ function init() {
     directionalLight.position.set(1, 1, 1).normalize();
     scene.add(directionalLight);
 
-    // Create the environment and the paper plane
+    // Create the environment
     environment = new Environment(scene, renderer);
-    paperPlane = new PaperPlane(scene);
-
-    // Set up controls
-    controls = new Controls(paperPlane);
 
     // Handle window resize
     window.addEventListener('resize', onWindowResize);
@@ -45,7 +39,6 @@ function animate(time) {
     requestAnimationFrame(animate);
     try {
         environment.update(time);
-        controls.update();
         renderer.render(scene, camera);
     } catch (error) {
         console.error("An error occurred during animation:", error);
