@@ -30,6 +30,13 @@ function init() {
     directionalLight.position.set(1, 1, 1).normalize();
     scene.add(directionalLight);
 
+    // Add debug helpers
+    const axesHelper = new THREE.AxesHelper(50);
+    scene.add(axesHelper);
+
+    const gridHelper = new THREE.GridHelper(100, 10);
+    scene.add(gridHelper);
+
     environment = new Environment(scene, renderer, camera);
     paperPlane = new PaperPlane(scene);
     controls = new Controls(paperPlane, environment);
