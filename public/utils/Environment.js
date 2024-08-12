@@ -11,6 +11,7 @@ export class Environment {
         this.water = null;
         this.sky = null;
         this.sun = new THREE.Vector3();
+        this.obstacles = [];
 
         this.isMouseDown = false;
         this.mouseX = 0;
