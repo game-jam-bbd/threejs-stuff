@@ -19,7 +19,7 @@ function init() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 20000);
-    camera.position.set(0, 30, 50);  // Adjusted camera position for better view
+    camera.position.set(0, 30, 30);  // Moved camera closer to the scene
     camera.lookAt(0, 20, -30);  // Look at the area where the plane will be
 
     // Add lighting
@@ -39,7 +39,7 @@ function init() {
 
     environment = new Environment(scene, renderer, camera);
     paperPlane = new PaperPlane(scene);
-    controls = new Controls(paperPlane, environment);
+    controls = new Controls(paperPlane, environment, camera);
 
     clock = new THREE.Clock();
 

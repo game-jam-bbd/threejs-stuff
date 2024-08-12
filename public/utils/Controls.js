@@ -1,13 +1,16 @@
 export class Controls {
-    constructor(paperPlane, environment) {
+    constructor(paperPlane, environment, camera) {
         this.paperPlane = paperPlane;
         this.environment = environment;
+        this.camera = camera;
         this.speed = 0.2;
         this.rotationSpeed = 0.05;
         this.brightnessStep = 1;
+        this.zoomSpeed = 0.1;
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
+        window.addEventListener('wheel', (event) => this.onWheel(event));
     }
 
     onKeyDown(event) {
@@ -39,6 +42,14 @@ export class Controls {
         // Reset rotation when key is released
         if (!this.paperPlane.mesh) return;
         this.paperPlane.mesh.rotation.set(0, 0, 0);
+    }
+
+    onWheel(event) {
+        event.preventDefault();
+        const zoomAmount = event.deltaY * this.zoomSpeed;
+        this.camera.position.z += zoomAmount;
+        // Clamp the camera's z position to prevent zooming too close or too far
+        this.camera.position.z = Math.max(10, Math.min(100, this.camera.position.z));
     }
 
     update(deltaTime) {
