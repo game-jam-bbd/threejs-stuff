@@ -30,14 +30,6 @@ export class Environment {
         this.mouseY = (event.clientY - this.windowHalfY) * 0.05;
     }
 
-    update() {
-        this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
-        this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
-        this.camera.lookAt(this.scene.position);
-
-        this.water.material.uniforms['time'].value += 1.0 / 60.0;
-    }
-
     createObstacles() {
         const obstacleData = [
             { model: 'utils/models/palm_tree.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
@@ -117,6 +109,10 @@ export class Environment {
     }
 
     update() {
+        this.camera.position.x += (this.mouseX - this.camera.position.x) * 0.05;
+        this.camera.position.y += (-this.mouseY - this.camera.position.y) * 0.05;
+        this.camera.lookAt(this.scene.position);
+
         this.water.material.uniforms['time'].value += 1.0 / 60.0;
         this.renderer.render(this.scene, this.camera);
     }
