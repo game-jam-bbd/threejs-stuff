@@ -9,8 +9,8 @@ export class Controls {
         this.rotationSpeed = 0.05;
         this.brightnessStep = 1;
         this.zoomSpeed = 0.1;
-        this.minZoom = 10;
-        this.maxZoom = 100;
+        this.minZoom = 0.5;
+        this.maxZoom = 2;
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
@@ -53,19 +53,15 @@ export class Controls {
         
         const zoomAmount = event.deltaY * 0.001; // Adjust this value to change zoom sensitivity
         
-        // Get the camera's forward direction
-        const forward = new THREE.Vector3(0, 0, -1).applyQuaternion(this.camera.quaternion);
+        // Update the camera's zoom
+        this.camera.zoom = THREE.MathUtils.clamp(
+            this.camera.zoom - zoomAmount,
+            this.minZoom,
+            this.maxZoom
+        );
         
-        // Calculate the new position
-        const newPosition = this.camera.position.clone().addScaledVector(forward, zoomAmount);
-        
-        // Calculate the distance from the new position to the origin
-        const distance = newPosition.length();
-        
-        // Check if the new position is within the allowed zoom range
-        if (distance > this.minZoom && distance < this.maxZoom) {
-            this.camera.position.copy(newPosition);
-        }
+        // Update the camera's projection matrix
+        this.camera.updateProjectionMatrix();
     }
 
     update(deltaTime) {
