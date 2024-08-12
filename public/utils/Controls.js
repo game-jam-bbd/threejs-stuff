@@ -14,7 +14,7 @@ export class Controls {
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
-        window.addEventListener('wheel', (event) => this.onWheel(event));
+        window.addEventListener('wheel', (event) => this.onWheel(event), { passive: false });
     }
 
     onKeyDown(event) {
@@ -62,6 +62,9 @@ export class Controls {
         
         // Update the camera's projection matrix
         this.camera.updateProjectionMatrix();
+
+        // Prevent default scrolling behavior
+        return false;
     }
 
     update(deltaTime) {
