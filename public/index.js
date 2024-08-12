@@ -55,10 +55,9 @@ function onWindowResize() {
 function animate() {
     requestAnimationFrame(animate);
     const deltaTime = clock.getDelta();
-    environment.update();
+    environment.update(deltaTime);
     paperPlane.update(deltaTime);
     controls.update(deltaTime);
-    paperPlane.update(deltaTime);
     renderer.render(scene, camera);
 }
 

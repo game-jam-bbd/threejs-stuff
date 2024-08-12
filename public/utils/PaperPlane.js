@@ -29,14 +29,6 @@ export class PaperPlane {
         if (this.mesh) {
             // Implement a hovering effect
             this.mesh.position.y = 20 + Math.sin(Date.now() * 0.001) * 1;  // Hover between 19 and 21 units high
-            
-            // Slow down the forward movement
-            this.mesh.position.z -= this.speed * deltaTime * 0.05;
-            
-            // Reset position when it goes too far
-            if (this.mesh.position.z < -100) {
-                this.mesh.position.z = 100;
-            }
 
             // Log position for debugging
             console.log('Plane position:', this.mesh.position);

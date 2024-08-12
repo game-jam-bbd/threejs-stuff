@@ -137,12 +137,22 @@ export class Environment {
         this.updateSun();
     }
 
-    update() {
+    update(deltaTime) {
         this.camera.position.x = Math.sin(this.targetRotationX) * 100;
         this.camera.position.z = Math.cos(this.targetRotationX) * 100;
         this.camera.position.y = Math.sin(this.targetRotationY) * 100;
         this.camera.lookAt(this.scene.position);
 
-        this.water.material.uniforms['time'].value += 1.0 / 60.0;
+        // Move the water texture
+        this.water.material.uniforms['time'].value += deltaTime * 0.5;
+
+        // Move the water plane towards the camera
+        const waterSpeed = 30; // Adjust this value to change the speed of the water
+        this.water.position.z += waterSpeed * deltaTime;
+
+        // Reset water position when it gets too close to the camera
+        if (this.water.position.z > 1000) {
+            this.water.position.z = 0;
+        }
     }
 }
