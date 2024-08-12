@@ -10,6 +10,7 @@ app.use(express.urlencoded({
 }));
 
 app.use(express.static(__dirname + '/public'));
+app.use('/three', express.static(__dirname + '/node_modules/three'));
 
 // endpoint to render the landing page
 app.get('/', (req, res) => {
