@@ -21,8 +21,11 @@ directionalLight.position.set(1, 1, 1).normalize();
 scene.add(directionalLight);
 
 // Create the environment and the paper plane
-const environment = new Environment(scene);
+const environment = new Environment(scene, renderer);
 const paperPlane = new PaperPlane(scene);
+
+// In your animation loop, add:
+environment.update(time);
 
 // Set up controls
 const controls = new Controls(paperPlane);
