@@ -7,6 +7,8 @@ import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import { Water } from 'three/addons/objects/Water.js';
 import { Sky } from 'three/addons/objects/Sky.js';
 
+import { Obstacle } from './Obstacle.js';
+
 export class Environment {
     constructor(scene, renderer, camera) {
         this.camera = camera;
@@ -15,10 +17,36 @@ export class Environment {
         this.water = null;
         this.sky = null;
         this.sun = new THREE.Vector3();
+        //this.obstacles = [];
 
         this.createWater();
         this.createSky();
         this.updateSun();
+        //this.createObstacles();
+    }
+
+    createObstacles() {
+        const obstacleData = [
+            { model: 'utils/models/palm_tree.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
+                { x: 10, y: 0, z: -50 },
+                { x: -15, y: 0, z: -150 },
+                { x: 5, y: 0, z: -250 }
+            ]},
+            { model: 'utils/models/lighthouse.glb', scale: { x: 0.05, y: 0.05, z: 0.05 }, positions: [
+                { x: -20, y: 0, z: -100 },
+                { x: 25, y: 0, z: -300 }
+            ]},
+            { model: 'utils/models/wind_turbine.glb', scale: { x: 0.1, y: 0.1, z: 0.1 }, positions: [
+                { x: 0, y: 0, z: -200 },
+                { x: -30, y: 0, z: -350 }
+            ]}
+        ];
+
+        obstacleData.forEach(data => {
+            data.positions.forEach(position => {
+                this.obstacles.push(new Obstacle(this.scene, data.model, data.scale, position));
+            });
+        });
     }
 
     createWater() {
@@ -28,7 +56,7 @@ export class Environment {
             {
                 textureWidth: 512,
                 textureHeight: 512,
-                waterNormals: new THREE.TextureLoader().load('textures/waternormals.jpg', function(texture) {
+                waterNormals: new THREE.TextureLoader().load('utils/textures/waternormals.jpg', function(texture) {
                     texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
                 }),
                 sunDirection: new THREE.Vector3(),

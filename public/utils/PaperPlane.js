@@ -1,19 +1,32 @@
 import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 
 export class PaperPlane {
     constructor(scene) {
-        const planeGeometry = new THREE.ConeGeometry(0.2, 1, 3);
-        const planeMaterial = new THREE.MeshStandardMaterial({ color: 0xffa07a });
-        this.mesh = new THREE.Mesh(planeGeometry, planeMaterial);
-        this.mesh.rotation.x = Math.PI / 2;  // Pointing forward
-
-        this.mesh.position.set(0, 0, 0);  // Start at the origin
-        scene.add(this.mesh);
+        this.scene = scene;
+        this.mesh = null;
+        this.speed = 10;
+        this.loadModel();
     }
 
-    // Example method for updating plane position
+    loadModel() {
+        const loader = new GLTFLoader();
+        loader.load('utils/models/plane2.glb', (gltf) => {
+            this.mesh = gltf.scene;
+            this.mesh.scale.set(0.1, 0.1, 0.1);  // Adjust scale as needed
+            this.mesh.position.set(0, 5, 0);  // Start above the water
+            this.scene.add(this.mesh);
+        });
+    }
+
     update(deltaTime) {
-        // Add simple forward movement
-        this.mesh.position.z -= deltaTime * 0.5;  // Move forward over time
+        if (this.mesh) {
+            this.mesh.position.z -= this.speed * deltaTime;
+            
+            // Reset position when it goes too far
+            if (this.mesh.position.z < -1000) {
+                this.mesh.position.z = 1000;
+            }
+        }
     }
 }
