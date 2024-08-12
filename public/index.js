@@ -30,8 +30,12 @@ const controls = new Controls(paperPlane);
 // Animation loop
 function animate() {
     requestAnimationFrame(animate);
-    controls.update();
-    renderer.render(scene, camera);
+    try {
+        controls.update();
+        renderer.render(scene, camera);
+    } catch (error) {
+        console.error("An error occurred during animation:", error);
+    }
 }
 
 animate();
