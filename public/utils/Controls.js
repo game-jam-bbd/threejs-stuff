@@ -1,3 +1,5 @@
+import * as THREE from 'three';
+
 export class Controls {
     constructor(paperPlane, environment, camera) {
         this.paperPlane = paperPlane;
@@ -7,6 +9,8 @@ export class Controls {
         this.rotationSpeed = 0.05;
         this.brightnessStep = 1;
         this.zoomSpeed = 0.1;
+        this.minZoom = 10;
+        this.maxZoom = 100;
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
@@ -47,14 +51,18 @@ export class Controls {
     onWheel(event) {
         event.preventDefault();
         const zoomAmount = event.deltaY * this.zoomSpeed;
-        // Move the camera along its local z-axis
-        this.camera.translateZ(zoomAmount);
-        // Clamp the camera's distance from the origin
-        const distance = this.camera.position.length();
-        if (distance < 10) {
-            this.camera.position.setLength(10);
-        } else if (distance > 100) {
-            this.camera.position.setLength(100);
+        
+        // Calculate the new camera position
+        const cameraDirection = new THREE.Vector3();
+        this.camera.getWorldDirection(cameraDirection);
+        const newPosition = this.camera.position.clone().add(cameraDirection.multiplyScalar(zoomAmount));
+        
+        // Calculate the distance from the new position to the target (assumed to be at 0,0,0)
+        const distance = newPosition.length();
+        
+        // Check if the new position is within the allowed zoom range
+        if (distance > this.minZoom && distance < this.maxZoom) {
+            this.camera.position.copy(newPosition);
         }
     }
 
