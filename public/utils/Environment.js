@@ -1,17 +1,7 @@
-// Remove this line as we're now using the global THREE object
-
 import * as THREE from 'three';
-
-import Stats from 'three/addons/libs/stats.module.js';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
 import { Water } from 'three/addons/objects/Water.js';
 import { Sky } from 'three/addons/objects/Sky.js';
-
 import { Obstacle } from './Obstacle.js';
-
-import * as THREE from 'three';
-import { Water } from 'three/addons/objects/Water.js';
-import { Sky } from 'three/addons/objects/Sky.js';
 
 export class Environment {
     constructor(scene, renderer, camera) {

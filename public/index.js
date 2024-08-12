@@ -1,4 +1,3 @@
-// Remove this line as we're now using the global THREE object
 import * as THREE from 'three';
 import { Environment } from './utils/Environment.js';
 import { PaperPlane } from './utils/PaperPlane.js';
