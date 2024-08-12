@@ -10,7 +10,7 @@ export class Controls {
         this.brightnessStep = 1;
         this.zoomSpeed = 0.1;
         this.minZoom = 0.5;
-        this.maxZoom = 2;
+        this.maxZoom = 4;
 
         window.addEventListener('keydown', (event) => this.onKeyDown(event));
         window.addEventListener('keyup', (event) => this.onKeyUp(event));
