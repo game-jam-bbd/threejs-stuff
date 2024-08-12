@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+// Remove this line as we're now using the global THREE object
 import { PaperPlane } from './utils/PaperPlane.js';
 import { Environment } from './utils/Environment.js';
 import { Controls } from './utils/Controls.js';

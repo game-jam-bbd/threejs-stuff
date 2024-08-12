@@ -1,4 +1,4 @@
-import * as THREE from 'three';
+// Remove this line as we're now using the global THREE object
 
 export class Environment {
     constructor(scene) {
