@@ -19,8 +19,8 @@ function init() {
     scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 20000);
-    camera.position.set(0, 30, 30);  // Moved camera closer to the scene
-    camera.lookAt(0, 20, -30);  // Look at the area where the plane will be
+    camera.position.set(0, 40, 50);  // Moved camera back and up a bit
+    camera.lookAt(0, 20, -50);  // Updated look-at point to match new plane position
 
     // Add lighting
     const ambientLight = new THREE.AmbientLight(0x404040, 2);  // Increased intensity

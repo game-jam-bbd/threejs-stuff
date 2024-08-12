@@ -13,8 +13,8 @@ export class PaperPlane {
         const loader = new GLTFLoader();
         loader.load('utils/models/plane2.glb', (gltf) => {
             this.mesh = gltf.scene;
-            this.mesh.scale.set(5, 5, 5);  // Increased scale for better visibility
-            this.mesh.position.set(0, 20, -30);  // Position in front of the camera
+            this.mesh.scale.set(10, 10, 10);  // Doubled the scale for even better visibility
+            this.mesh.position.set(0, 20, -50);  // Moved slightly further back
             this.mesh.rotation.y = Math.PI;  // Rotate to face the correct direction
             this.scene.add(this.mesh);
             console.log('Paper plane loaded and added to scene');

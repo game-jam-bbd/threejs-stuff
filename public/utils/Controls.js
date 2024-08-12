@@ -47,9 +47,15 @@ export class Controls {
     onWheel(event) {
         event.preventDefault();
         const zoomAmount = event.deltaY * this.zoomSpeed;
-        this.camera.position.z += zoomAmount;
-        // Clamp the camera's z position to prevent zooming too close or too far
-        this.camera.position.z = Math.max(10, Math.min(100, this.camera.position.z));
+        // Move the camera along its local z-axis
+        this.camera.translateZ(zoomAmount);
+        // Clamp the camera's distance from the origin
+        const distance = this.camera.position.length();
+        if (distance < 10) {
+            this.camera.position.setLength(10);
+        } else if (distance > 100) {
+            this.camera.position.setLength(100);
+        }
     }
 
     update(deltaTime) {
