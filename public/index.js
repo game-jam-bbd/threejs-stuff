@@ -1,39 +1,50 @@
 // Remove this line as we're now using the global THREE object
+import * as THREE from 'three';
 import { PaperPlane } from './utils/PaperPlane.js';
 import { Environment } from './utils/Environment.js';
 import { Controls } from './utils/Controls.js';
 
-// Set up the scene, camera, and renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-camera.position.z = 5;
+let scene, camera, renderer, environment, paperPlane, controls;
 
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+function init() {
+    // Set up the scene, camera, and renderer
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
 
-// Add lighting
-const ambientLight = new THREE.AmbientLight(0x404040);
-scene.add(ambientLight);
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-directionalLight.position.set(1, 1, 1).normalize();
-scene.add(directionalLight);
+    // Add lighting
+    const ambientLight = new THREE.AmbientLight(0x404040);
+    scene.add(ambientLight);
 
-// Create the environment and the paper plane
-const environment = new Environment(scene, renderer);
-const paperPlane = new PaperPlane(scene);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+    directionalLight.position.set(1, 1, 1).normalize();
+    scene.add(directionalLight);
 
-// In your animation loop, add:
-environment.update(time);
+    // Create the environment and the paper plane
+    environment = new Environment(scene, renderer);
+    paperPlane = new PaperPlane(scene);
 
-// Set up controls
-const controls = new Controls(paperPlane);
+    // Set up controls
+    controls = new Controls(paperPlane);
 
-// Animation loop
-function animate() {
+    // Handle window resize
+    window.addEventListener('resize', onWindowResize);
+}
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+function animate(time) {
     requestAnimationFrame(animate);
     try {
+        environment.update(time);
         controls.update();
         renderer.render(scene, camera);
     } catch (error) {
@@ -41,11 +52,5 @@ function animate() {
     }
 }
 
+init();
 animate();
-
-// Handle window resize
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
