@@ -13,7 +13,7 @@ export class PaperPlane {
         const loader = new GLTFLoader();
         loader.load('utils/models/plane2.glb', (gltf) => {
             this.mesh = gltf.scene;
-            this.mesh.scale.set(10, 10, 10);  // Doubled the scale for even better visibility
+            this.mesh.scale.set(20, 20, 20);  // Doubled the scale for even better visibility
             this.mesh.position.set(0, 20, -50);  // Moved slightly further back
             this.mesh.rotation.y = Math.PI;  // Rotate to face the correct direction
             this.scene.add(this.mesh);
